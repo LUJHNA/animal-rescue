@@ -1,0 +1,18 @@
+# Web Framework
+Flask==2.3.3
+
+# Database & ORM
+Flask-SQLAlchemy==3.1.1
+SQLAlchemy==2.0.21
+
+# Brugt i forms og til validering
+Flask-WTF==1.2.1
+WTForms==3.0.1
+email-validator==2.0.0
+
+# Template Engine og WSGI
+Werkzeug==2.3.7
+Jinja2==3.1.2
+
+# Note: Kør 'pip install -r requirements.txt' 
+# I terminalen for at alle de nødvendige dependencies bliver installeret.

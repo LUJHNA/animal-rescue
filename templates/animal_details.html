@@ -1,0 +1,105 @@
+{% extends "layout.html" %}
+
+{% block title %}{{ animal.Name }} Details - Jakob's Animal Rescue{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <a href="{{ url_for('animals') }}" class="btn btn-outline-primary">&larr; Back to Animals</a>
+    <div>
+        <a href="{{ url_for('update_animal', id=animal.Id) }}" class="btn btn-warning">Edit</a>
+        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
+            Delete
+        </button>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        {% if animal.ImageUrl %}
+        <img src="{{ animal.ImageUrl }}" class="img-fluid rounded" alt="{{ animal.Name }}">
+        {% else %}
+        <div class="bg-light text-center py-5">No Image Available</div>
+        {% endif %}
+    </div>
+    <div class="col-md-6">
+        <div class="d-flex justify-content-between align-items-center">
+            <h1>{{ animal.Name }}</h1>
+            <span class="badge {% if animal.Status == 'Available' %}bg-success{% elif animal.Status == 'Pending' %}bg-warning text-dark{% else %}bg-secondary{% endif %} fs-6">
+                {{ animal.Status }}
+            </span>
+        </div>
+        <div class="mb-4 mt-2">
+            <span class="badge bg-primary">{{ animal.Species }}</span>
+            {% if animal.Breed %}
+            <span class="badge bg-secondary">{{ animal.Breed }}</span>
+            {% endif %}
+        </div>
+        
+        <table class="table">
+            <tbody>
+                <tr>
+                    <th scope="row" width="120">Age:</th>
+                    <td>{{ animal.Age or 'Unknown' }} years</td>
+                </tr>
+                <tr>
+                    <th scope="row">Gender:</th>
+                    <td>{{ animal.Gender }}</td>
+                </tr>
+                {% if animal.Status == 'Adopted' and animal.adopter %}
+                <tr>
+                    <th scope="row">Adopted By:</th>
+                    <td>{{ animal.adopter.FirstName }} {{ animal.adopter.LastName }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Adoption Date:</th>
+                    <td>{{ animal.AdoptionDate.strftime('%B %d, %Y') }}</td>
+                </tr>
+                {% endif %}
+            </tbody>
+        </table>
+        
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">About {{ animal.Name }}</h5>
+            </div>
+            <div class="card-body">
+                <p>{{ animal.Description }}</p>
+            </div>
+        </div>
+        
+        {% if animal.Status == 'Available' %}
+        <div class="d-grid gap-2">
+            <a href="{{ url_for('adopt_animal', id=animal.Id) }}" class="btn btn-success btn-lg">Adopt {{ animal.Name }}</a>
+        </div>
+        {% elif animal.Status == 'Pending' %}
+        <div class="alert alert-warning">
+            This animal's adoption is currently pending. Please check back later or inquire about other animals.
+        </div>
+        {% else %}
+        <div class="alert alert-secondary">
+            This animal has already been adopted. Please check our other animals who are still looking for a home.
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Confirm Deletion</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete {{ animal.Name }}? This action cannot be undone.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <form action="{{ url_for('delete_animal', id=animal.Id) }}" method="POST">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

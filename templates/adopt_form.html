@@ -1,0 +1,115 @@
+{% extends "layout.html" %}
+
+{% block title %}Adopt {{ animal.Name }} - Jakob's Animal Rescue{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-10">
+    <div class="card mb-4">
+      <div class="card-header">
+        <h2>Adoption Application for {{ animal.Name }}</h2>
+      </div>
+      <div class="card-body">
+        <div class="row mb-4">
+          <div class="col-md-4">
+            {% if animal.ImageUrl %}
+            <img src="{{ animal.ImageUrl }}" class="img-fluid rounded" alt="{{ animal.Name }}">
+            {% else %}
+            <div class="bg-light text-center py-5">No Image Available</div>
+            {% endif %}
+          </div>
+          <div class="col-md-8">
+            <h3>{{ animal.Name }}</h3>
+            <p><strong>Species:</strong> {{ animal.Species }}</p>
+            <p><strong>Breed:</strong> {{ animal.Breed or 'Unknown' }}</p>
+            <p><strong>Age:</strong> {{ animal.Age }} years</p>
+            <p><strong>Gender:</strong> {{ animal.Gender }}</p>
+          </div>
+        </div>
+        
+        <hr>
+        
+        <h4 class="mb-3">Your Information</h4>
+        <form method="POST" action="">
+          {{ form.hidden_tag() }}
+          
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <div class="mb-3">
+                {{ form.first_name.label(class="form-label") }}
+                {{ form.first_name(class="form-control") }}
+                {% if form.first_name.errors %}
+                  <div class="text-danger">
+                    {% for error in form.first_name.errors %}
+                      <small>{{ error }}</small>
+                    {% endfor %}
+                  </div>
+                {% endif %}
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3">
+                {{ form.last_name.label(class="form-label") }}
+                {{ form.last_name(class="form-control") }}
+                {% if form.last_name.errors %}
+                  <div class="text-danger">
+                    {% for error in form.last_name.errors %}
+                      <small>{{ error }}</small>
+                    {% endfor %}
+                  </div>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+          
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <div class="mb-3">
+                {{ form.email.label(class="form-label") }}
+                {{ form.email(class="form-control") }}
+                {% if form.email.errors %}
+                  <div class="text-danger">
+                    {% for error in form.email.errors %}
+                      <small>{{ error }}</small>
+                    {% endfor %}
+                  </div>
+                {% endif %}
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3">
+                {{ form.phone.label(class="form-label") }}
+                {{ form.phone(class="form-control") }}
+                {% if form.phone.errors %}
+                  <div class="text-danger">
+                    {% for error in form.phone.errors %}
+                      <small>{{ error }}</small>
+                    {% endfor %}
+                  </div>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+          
+          <div class="mb-3">
+            {{ form.address.label(class="form-label") }}
+            {{ form.address(class="form-control", rows=3) }}
+            {% if form.address.errors %}
+              <div class="text-danger">
+                {% for error in form.address.errors %}
+                  <small>{{ error }}</small>
+                {% endfor %}
+              </div>
+            {% endif %}
+          </div>
+          
+          <div class="d-flex">
+            {{ form.submit(class="btn btn-primary") }}
+            <a href="{{ url_for('animal_details', id=animal.Id) }}" class="btn btn-secondary ms-2">Cancel</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

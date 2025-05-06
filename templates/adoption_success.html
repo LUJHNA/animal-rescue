@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+
+{% block title %}Adoption Application Submitted - Jakob's Animal Rescue{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-8">
+    <div class="card">
+      <div class="card-body text-center py-5">
+        <h1 class="display-4 text-success mb-4">
+          <i class="bi bi-check-circle-fill"></i>
+          Thank You!
+        </h1>
+        <h2>Your adoption application for {{ animal.Name }} has been submitted!</h2>
+        <p class="lead my-4">
+          We have received your application and will review it shortly. 
+          One of our staff members will contact you at {{ adopter.Email }} within 2-3 business days 
+          to discuss the next steps in the adoption process.
+        </p>
+        <div class="my-4">
+          <div class="row justify-content-center">
+            <div class="col-md-6">
+              {% if animal.ImageUrl %}
+              <img src="{{ animal.ImageUrl }}" class="img-fluid rounded" alt="{{ animal.Name }}">
+              {% else %}
+              <div class="bg-light text-center py-5">No Image Available</div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+        <div class="mt-4">
+          <a href="{{ url_for('animals') }}" class="btn btn-primary">View More Animals</a>
+          <a href="{{ url_for('index') }}" class="btn btn-outline-primary ms-2">Return Home</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

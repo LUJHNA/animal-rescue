@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+
+{% block title %}Home - Jakob's Animal Rescue{% endblock %}
+
+{% block content %}
+<div class="jumbotron p-5 mb-4 bg-light rounded-3">
+    <div class="container-fluid py-5">
+        <h1 class="display-5 fw-bold">Welcome to Jakob's Animal Rescue</h1>
+        <p class="col-md-8 fs-4">Find your perfect furry friend and give them a loving home.</p>
+        <a class="btn btn-primary btn-lg" href="{{ url_for('animals') }}">Browse Animals</a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <h2>Why We Do This</h2>
+        <p>
+            At Jakob's Animal Rescue, we believe every animal deserves a loving home. 
+            Our mission is to connect wonderful pets with caring owners who will 
+            provide them with the love and care they deserve.
+        </p>
+    </div>
+    <div class="col-md-6">
+        <h2>How It Works</h2>
+        <p>
+            Browse our available animals to find your perfect match. 
+            Each animal has a detailed profile so you can get to know them 
+            before making the decision to adopt.
+        </p>
+    </div>
+</div>
+{% endblock %}
