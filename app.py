@@ -1,3 +1,5 @@
+import os
+
 from flask import Flask, render_template, url_for, redirect, request, flash
 from models import Animal, Adopter, app, db
 from forms import AnimalForm, AdopterForm
@@ -195,4 +197,7 @@ def about():
     return render_template('about.html', title='About Us')
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    # Local: python app.py — Docker/Dokploy uses gunicorn (see Dockerfile).
+    port = int(os.environ.get("PORT", "5000"))
+    debug = os.environ.get("FLASK_DEBUG", "0") == "1"
+    app.run(host="0.0.0.0", port=port, debug=debug)

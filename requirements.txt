@@ -14,5 +14,8 @@ email-validator==2.0.0
 Werkzeug==2.3.7
 Jinja2==3.1.2
 
+# Production server (Dokploy / Docker)
+gunicorn==21.2.0
+
 # Note: Kør 'pip install -r requirements.txt' 
 # I terminalen for at alle de nødvendige dependencies bliver installeret.
