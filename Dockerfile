@@ -1,4 +1,5 @@
-FROM python:3.12-slim
+# INTENTIONAL FAIL (Dokploy CI practice) — bad image tag so the build errors.
+FROM python:3.12-slim-this-tag-does-not-exist
 
 WORKDIR /app
 
